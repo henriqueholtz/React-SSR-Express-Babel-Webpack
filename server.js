@@ -6,6 +6,7 @@ import axios from 'axios';
 import { App } from './src/App';
 
 const app = express();
+app.use(express.static('dist/public'))
 
 app.get('/', function(req, res) {
     axios.get('http://localhost:3030/comments').then(function(resp) {
@@ -24,6 +25,8 @@ app.get('/', function(req, res) {
                 ${ReactDOM.renderToString(<App comments={resp.data?.slice(0, 2)} />)}
                 </div>
                 <h1>Hello World! React + SSR +  Express + Babel + Webpack .</h1>
+                <script>localStorage.setItem('comments', '${JSON.stringify(resp.data)}')</script>
+                <script src="bundle_client.js" ></script>
             </body>
             </html>
         `;
